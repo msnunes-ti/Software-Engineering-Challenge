@@ -42,12 +42,12 @@
 			<artifactId>aspose-cells</artifactId>
 			<version>22.11</version>
 		</dependency>
-		<dependency>
-			<groupId>com.aspose</groupId>
-			<artifactId>aspose-cells</artifactId>
-			<version>22.11</version>
-			<classifier>javadoc</classifier>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.aspose</groupId>-->
+<!--			<artifactId>aspose-cells</artifactId>-->
+<!--			<version>22.11</version>-->
+<!--			<classifier>javadoc</classifier>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15on</artifactId>
