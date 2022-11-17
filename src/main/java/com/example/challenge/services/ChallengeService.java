@@ -25,12 +25,13 @@ public class ChallengeService {
                 int p1 = 0;
                 int p2 = 0;
                 int p3 = 0;
+                double average = calculateAverage(p1, p2, p3);
+                boolean isFinalExam = false;
                 if (j == 2) absences = (int) worksheet.getCells().get(i, j).getValue();
                 if (j == 3) p1 = (int) worksheet.getCells().get(i, j).getValue();
                 if (j == 4) p2 = (int) worksheet.getCells().get(i, j).getValue();
                 if (j == 5) p3 = (int) worksheet.getCells().get(i, j).getValue();
                 if (j == 6) {
-                    double average  = calculateAverage(p1, p2, p3);
                     if (average < 50) {
                         worksheet.setActiveCell("Reprovado por Nota");
                     }
@@ -39,8 +40,12 @@ public class ChallengeService {
                     }
                     if (50 <= average && average < 70) {
                         worksheet.setActiveCell("Exame Final");
+                        isFinalExam = true;
                     }
                     if (isFailedForAbsences(absences, totalClasses)) worksheet.setActiveCell("Reprovado por Nota");
+                }
+                if (j == 7) {
+                    if (isFinalExam) worksheet.setActiveCell("Nota para Aprovação Final: " + (50 - average));
                 }
             }
         }

@@ -10,12 +10,5 @@ public class ChallengeApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ChallengeApplication.class, args);
-
-		ChallengeController challengeController = new ChallengeController();
-		try {
-			challengeController.calculateAverage();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 }
