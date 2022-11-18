@@ -17,10 +17,10 @@ public class ChallengeService {
         Workbook workbook = new Workbook("c:/Engenharia de Software - Desafio - Marcelo da Silva Nunes.xlsx");
         Worksheet worksheet = workbook.getWorksheets().get(0);
         String text = String.valueOf(worksheet.getCells().get(1, 0));
-        int totalClasses = retirarNumInteiro(text);
+        int totalClasses = searchNumInteger(text);
         int rows = worksheet.getCells().getMaxDataRow();
         int cols = worksheet.getCells().getMaxDataColumn();
-        int faltas = 0;
+        int absences = 0;
         int p1 = 0;
         int p2 = 0;
         int p3 = 0;
@@ -28,25 +28,25 @@ public class ChallengeService {
         for (int i = 3; i <= rows; i++) {
             // Loop through each column in the selected row
             for (int j = 0; j < cols; j++) {
-                Integer media = calculateAverage(p1, p2, p3);
-                if (j == 2) faltas = worksheet.getCells().get(i, j).getIntValue();
+                Integer average = calculateAverage(p1, p2, p3);
+                if (j == 2) absences = worksheet.getCells().get(i, j).getIntValue();
                 if (j == 3) p1 = worksheet.getCells().get(i, j).getIntValue();
                 if (j == 4) p2 = worksheet.getCells().get(i, j).getIntValue();
                 if (j == 5) p3 = worksheet.getCells().get(i, j).getIntValue();
                 if (j == 6) {
-                    if (media < 5) {
+                    if (average < 5) {
                         worksheet.getCells().get(i, j).putValue("Reprovado por Nota");
                         worksheet.getCells().get(i, (j + 1)).putValue("Nota necessária: 0 ");
                     }
-                    if (media >= 7) {
+                    if (average >= 7) {
                         worksheet.getCells().get(i, j).putValue("Aprovado");
                         worksheet.getCells().get(i, (j + 1)).putValue("Nota necessária: 0 ");
                     }
-                    if (5 <= media && media < 7) {
+                    if (5 <= average && average < 7) {
                         worksheet.getCells().get(i, j).putValue("Exame Final");
-                        worksheet.getCells().get(i, (j + 1)).putValue("Nota necessária: " + (10 - media));
+                        worksheet.getCells().get(i, (j + 1)).putValue("Nota necessária: " + (10 - average));
                     }
-                    if (isFailedForAbsences(faltas, totalClasses)) {
+                    if (isFailedForAbsences(absences, totalClasses)) {
                         worksheet.getCells().get(i, j).putValue("Reprovado por Falta");
                         worksheet.getCells().get(i, (j + 1)).putValue("Nota necessária: 0 ");
                     }
@@ -67,8 +67,8 @@ public class ChallengeService {
         return Math.round((p1 + p2 + p3) / 30);
     }
 
-    private Integer retirarNumInteiro (String text) {
-        String resultado = "";
+    private Integer searchNumInteger(String text) {
+        String result = "";
         for( int i = 52; i < text.length(); i++ ) {
             Integer aux;
             try {
@@ -77,9 +77,9 @@ public class ChallengeService {
                 aux = null;
             }
             if( aux != null ) {
-                resultado = resultado.concat( String.valueOf( aux ) );
+                result = result.concat(String.valueOf( aux ));
             }
         }
-        return Integer.parseInt(resultado);
+        return Integer.parseInt(result);
     }
 }
