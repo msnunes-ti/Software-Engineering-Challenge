@@ -24,9 +24,8 @@ public class ChallengeService {
         int p1 = 0;
         int p2 = 0;
         int p3 = 0;
-        boolean isFinalExam = false;
         // loop through the lines
-        for (int i = 3; i < rows; i++) {
+        for (int i = 3; i <= rows; i++) {
             // Loop through each column in the selected row
             for (int j = 0; j < cols; j++) {
                 Integer media = calculateAverage(p1, p2, p3);
@@ -35,40 +34,37 @@ public class ChallengeService {
                 if (j == 4) p2 = worksheet.getCells().get(i, j).getIntValue();
                 if (j == 5) p3 = worksheet.getCells().get(i, j).getIntValue();
                 if (j == 6) {
-                    if (media < 50) {
-//                        worksheet.setActiveCell("Reprovado por Nota");
-//                        worksheet.replace(" ", "Reprovado por Nota");
+                    if (media < 5) {
                         worksheet.getCells().get(i, j).putValue("Reprovado por Nota");
-//                        workbook.getWorksheets().get(0).getCells().get(i, j).putValue("Reprovado por Nota");
-
+                        worksheet.getCells().get(i, (j + 1)).putValue("Nota necessária: 0 ");
                     }
-                    if (media >= 70) {
-//                        worksheet.setActiveCell("Aprovado");
-//                        worksheet.replace(" ", "Aprovado");
+                    if (media >= 7) {
                         worksheet.getCells().get(i, j).putValue("Aprovado");
+                        worksheet.getCells().get(i, (j + 1)).putValue("Nota necessária: 0 ");
                     }
-                    if (50 <= media && media < 70) {
-//                        worksheet.setActiveCell("Exame Final");
-//                        worksheet.setCodeName("Exame Final");
+                    if (5 <= media && media < 7) {
                         worksheet.getCells().get(i, j).putValue("Exame Final");
-                        isFinalExam = true;
+                        worksheet.getCells().get(i, (j + 1)).putValue("Nota necessária: " + (10 - media));
                     }
-                    if (isFailedForAbsences(faltas, totalClasses)) worksheet.getCells().get(i, j).putValue("Reprovado por Nota");
-                }
-                if (j == 7) {
-                    if (isFinalExam) worksheet.getCells().get(i, j).putValue("Nota: " + (50 - media));
+                    if (isFailedForAbsences(faltas, totalClasses)) {
+                        worksheet.getCells().get(i, j).putValue("Reprovado por Falta");
+                        worksheet.getCells().get(i, (j + 1)).putValue("Nota necessária: 0 ");
+                    }
                 }
             }
         }
         workbook.save("c:/Engenharia de Software - Desafio - Marcelo da Silva Nunes.xlsx");
     }
 
-    public Boolean isFailedForAbsences(Integer absences, double totalClasses) {
-        return (totalClasses / absences) > (totalClasses * 0.25);
+    public Boolean isFailedForAbsences(int absences, int totalClasses) {
+        if (absences == 0) {
+            return false;
+        }
+        return absences > (totalClasses * 0.25);
     }
 
     public Integer calculateAverage (int p1, int p2, int p3) {
-        return Math.round((Integer) (p1 + p2 + p3) / 3);
+        return Math.round((p1 + p2 + p3) / 30);
     }
 
     private Integer retirarNumInteiro (String text) {
@@ -80,12 +76,10 @@ public class ChallengeService {
             } catch( Exception e ) {
                 aux = null;
             }
-
             if( aux != null ) {
                 resultado = resultado.concat( String.valueOf( aux ) );
             }
         }
-        int result = Integer.parseInt( resultado );
-        return  result;
+        return Integer.parseInt(resultado);
     }
 }
