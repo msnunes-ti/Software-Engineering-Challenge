@@ -14,7 +14,7 @@ public class ChallengeService {
     public void calculateAverage() throws Exception {
 
         //table link: https://docs.google.com/spreadsheets/d/1V7vOXGjAMb0BNPdodEsUhhFsyn29Us-Z_K2s2Nt5znc/edit?usp=share_link
-        Workbook workbook = new Workbook("c:/Engenharia de Software - Desafio - Marcelo da Silva Nunes.xlsx");
+        Workbook workbook = new Workbook("https://docs.google.com/spreadsheets/d/1V7vOXGjAMb0BNPdodEsUhhFsyn29Us-Z_K2s2Nt5znc/edit#gid=0");
         Worksheet worksheet = workbook.getWorksheets().get(0);
         String text = String.valueOf(worksheet.getCells().get(1, 0));
         int totalClasses = searchNumInteger(text);

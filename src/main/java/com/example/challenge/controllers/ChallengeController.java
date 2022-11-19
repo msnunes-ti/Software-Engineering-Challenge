@@ -11,7 +11,7 @@ public class ChallengeController {
     @Autowired
     ChallengeService challengeService;
 
-    @GetMapping
+    @PostMapping
     public void calculateAverage() throws Exception {
         challengeService.calculateAverage();
     }
