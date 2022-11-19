@@ -57,14 +57,11 @@ public class ChallengeService {
     }
 
     public Boolean isFailedForAbsences(int absences, int totalClasses) {
-        if (absences == 0) {
-            return false;
-        }
         return absences > (totalClasses * 0.25);
     }
 
     public Integer calculateAverage (int p1, int p2, int p3) {
-        return Math.round((p1 + p2 + p3) / 30);
+        return (p1 + p2 + p3) / 30;
     }
 
     private Integer searchNumInteger(String text) {
